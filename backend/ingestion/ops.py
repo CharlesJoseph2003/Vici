@@ -53,7 +53,7 @@ class RoiAnalyzer:
 
     def __init__(self, df: pd.DataFrame):
         self.raw_df = df
-        self.business_unit: str | None = None
+        self.business_units: list[str] = []
         self.high_value_diagnostic_types: list[str] = []
         self.high_value_maintenance_types: list[str] = []
         self.high_value_diagnostic_tags: list[str] = []
@@ -68,17 +68,19 @@ class RoiAnalyzer:
 
     @property
     def df(self) -> pd.DataFrame:
-        if self.business_unit:
-            return self.raw_df[self.raw_df["Business Unit"] == self.business_unit]
+        if self.business_units:
+            return self.raw_df[self.raw_df["Business Unit"].isin(self.business_units)]
         return self.raw_df
 
-    def set_business_unit(self, business_unit: str | None):
-        if business_unit and business_unit not in self.available_business_units():
+    def set_business_units(self, business_units: list[str]):
+        available = self.available_business_units()
+        invalid = [bu for bu in business_units if bu not in available]
+        if invalid:
             raise ValueError(
-                f"Business unit '{business_unit}' not found. "
-                f"Available: {self.available_business_units()}"
+                f"Business units not found: {invalid}. "
+                f"Available: {available}"
             )
-        self.business_unit = business_unit
+        self.business_units = business_units
 
     def available_business_units(self) -> list[str]:
         return self.raw_df["Business Unit"].dropna().unique().tolist()
