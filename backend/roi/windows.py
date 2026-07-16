@@ -4,7 +4,7 @@ from enum import Enum
 
 import pandas as pd
 
-from .ops import RoiAnalyzer
+from .analyzer import RoiAnalyzer
 
 
 class WindowMode(str, Enum):
