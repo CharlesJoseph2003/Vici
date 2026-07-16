@@ -1,0 +1,26 @@
+Part 1
+- Extract data from CSV and format it for database insertion
+- Perform calcuations on the data
+- Insert data into database
+- Return data in a format that can be used by the frontend
+- Use Celery for background processing and triggering parallel runs
+- Supabase for authentication and database
+- LLM Q&A and additional analysis execution 
+- Visual library for visualizations 
+- Store past ROI and other metrics for comparison
+- Allow users to save and share their analyses
+- Docker for containerization
+- Hosting on GCP
+- Golden dataset and evaluation framework
+- Async task processing
+
+
+
+Part 2
+- Pull context from Fathom, slack, linear
+- Use graphrag to consoilidate context across sources
+- Event triggers for Linear issues, calendar invites recommedations, updating overall state and context of customer 
+- prompt caching for LLM calls
+- Visualizations of progress over time
+- Scoring system for health of customers
+- Observability and monitoring with Grafana 
