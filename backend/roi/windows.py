@@ -205,3 +205,16 @@ def run_parallel_requests(
     requests: list[WindowRequest],
 ) -> list[WindowGroupResult]:
     return [_run_single_request(analyzer, request) for request in requests]
+
+
+def group_to_dict(group: WindowGroupResult) -> dict:
+    return {
+        "request_label": group.request_label,
+        "mode": group.mode.value,
+        "all_windows": [result_to_dict(r) for r in group.all_windows],
+        "top_windows": [result_to_dict(r) for r in group.top_windows],
+    }
+
+
+def result_to_dict(result: WindowResult) -> dict:
+    return {k: v for k, v in result.__dict__.items()}

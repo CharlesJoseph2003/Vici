@@ -1,3 +1,5 @@
+import io
+
 import pandas as pd
 
 
@@ -16,11 +18,18 @@ REQUIRED_COLUMNS = [
 ]
 
 
-def load_spreadsheet(file_path: str) -> pd.DataFrame:
-    df = pd.read_excel(file_path)
+def _validate_and_normalize(df: pd.DataFrame) -> pd.DataFrame:
     df.columns = [col.strip() for col in df.columns]
     missing = [col for col in REQUIRED_COLUMNS if col not in df.columns]
     if missing:
         raise ValueError(f"Missing required columns: {missing}")
     df["Created Date"] = pd.to_datetime(df["Created Date"])
     return df
+
+
+def load_spreadsheet(file_path: str) -> pd.DataFrame:
+    return _validate_and_normalize(pd.read_excel(file_path))
+
+
+def parse_from_bytes(data: bytes) -> pd.DataFrame:
+    return _validate_and_normalize(pd.read_excel(io.BytesIO(data)))
