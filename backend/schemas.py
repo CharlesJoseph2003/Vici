@@ -58,7 +58,4 @@ class RunSummary(BaseModel):
 
 class ChatRequest(BaseModel):
     message: str
-
-
-class ChatResponse(BaseModel):
-    message: str
+    # Response is an SSE stream — see backend/agent/loop.py::stream_turn for the event schema.
